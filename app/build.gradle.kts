@@ -38,7 +38,7 @@ android {
         }
 
         // BuildConfig personalizado
-        buildConfigField("String", "API_BASE_URL", "\"https://api.example.com/v1/\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://reqres.in/api/\"")
 
 
     }
@@ -112,6 +112,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
 implementation ("com.google.dagger:hilt-android:2.44")
 kapt ("com.google.dagger:hilt-compiler:2.44")
+
+    //hiltViewModel
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
 
 
 }
