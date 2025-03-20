@@ -31,19 +31,13 @@ class LoginViewModel : ViewModel() {
             _loginState.value = LoginState.Loading
             try {
                 val response = loginUseCase.execute(email, password)
-                Log.i("Login Request:->","""
-                    UserName: ${email}
-                    Password: ${password}
-                    
-                    ${response.message()}
-                """.trimIndent())
+
                 if (response.isSuccessful) {
                     _loginState.value = LoginState.Success(response.body()?.token ?: "No token found")
 
-                    Log.i("ViewModel Success->",_loginState.value.toString())
                 } else {
                     _loginState.value = LoginState.Error("Error: ${response.message()}")
-                    Log.i("ViewModel Error->",_loginState.value.toString())
+
                 }
             } catch (@SuppressLint("NewApi", "LocalSuppress") e: HttpException) {
                 _loginState.value = LoginState.Error("Network Error: ${e.message}")
