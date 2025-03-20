@@ -26,6 +26,10 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
 
     val state by viewModel.loginState.collectAsStateWithLifecycle()
 
+    var value by remember {
+        mutableStateOf("")
+    }
+
     Column {
 
         OutlinedTextField(value = email, onValueChange = {
@@ -39,14 +43,14 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
         }, label = {
             Text(text = "Password")
         })
-    var value=""
+
         Button(onClick = {
             viewModel.login(email, password)
             when (state) {
 
-                is LoginState.Idle -> {
+                is LoginState.Init -> {
                     Log.i("Login State->", "IDLE")
-                    value=LoginState.Idle.toString()
+                    value=LoginState.Init.toString()
                 }
 
                 is LoginState.Loading -> {
