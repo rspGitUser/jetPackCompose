@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.net.http.HttpException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.test.jetpackcompose.data.model.userlist.Data
 import com.test.jetpackcompose.data.repository.UserRepository
 import com.test.jetpackcompose.domain.usecase.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,17 +18,21 @@ sealed class LoginState {
     data class Error(val message: String) : LoginState()
 }
 
+
 class LoginViewModel : ViewModel() {
 
     private val loginUseCase = LoginUseCase(UserRepository())
 
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Init)
+
     val loginState: StateFlow<LoginState> = _loginState
+
+
 
     fun login(email: String, password: String) {
 
         viewModelScope.launch {
-            _loginState.value = LoginState.Loading
+          _loginState.value = LoginState.Loading
             try {
                 val response = loginUseCase.execute(email, password)
 

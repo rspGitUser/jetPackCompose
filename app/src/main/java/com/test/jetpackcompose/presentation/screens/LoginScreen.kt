@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,13 +41,14 @@ import okhttp3.Route
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
 
-//    var email by remember { mutableStateOf("eve.holt@reqres.in") }
-//    var password by remember { mutableStateOf("cityslicka") }
+    var email by remember { mutableStateOf("eve.holt@reqres.in") }
+    var password by remember { mutableStateOf("cityslicka") }
 
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val attemps by remember {
+        mutableStateOf(1)
+    }
 
-    val state by viewModel.loginState.collectAsStateWithLifecycle()
+    val state by viewModel.loginState.collectAsState()
 
     var value by remember {
         mutableStateOf("")
@@ -54,7 +56,9 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
     Image(
         painter = painterResource(id = R.drawable.lgbackground),
         contentDescription = "Login Background",
-        modifier = Modifier.fillMaxSize().blur(radius = 10.dp), contentScale = ContentScale.Crop
+        modifier = Modifier
+            .fillMaxSize()
+            .blur(radius = 10.dp), contentScale = ContentScale.Crop
     )
     Box(
         modifier = Modifier
@@ -82,12 +86,13 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 OnValueChange = { password = it.toString() })
 
             Button(modifier = Modifier.fillMaxWidth(), onClick = {
+
                 viewModel.login(email, password)
                 when (state) {
 
                     is LoginState.Init -> {
                         Log.i("Login State->", "IDLE")
-                        value = LoginState.Init.toString()
+
                     }
 
                     is LoginState.Loading -> {
