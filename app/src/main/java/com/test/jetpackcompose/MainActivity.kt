@@ -7,9 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.test.jetpackcompose.presentation.navigation.Navigation
 import com.test.jetpackcompose.presentation.screens.LoginScreen
 import com.test.jetpackcompose.ui.theme.JetpackComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +25,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                LoginScreen()
+                    val navController= rememberNavController()
+
+                Navigation(navController = navController)
                 }
             }
         }
     }
 }
+
+
 
