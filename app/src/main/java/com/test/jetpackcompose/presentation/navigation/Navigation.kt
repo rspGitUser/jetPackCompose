@@ -14,7 +14,7 @@ import com.test.jetpackcompose.presentation.screens.userList.UserList
 fun  Navigation(navController:NavHostController)
 {
 
-    NavHost(navController = navController , startDestination = Routes.PreLoginScreen.routeName){
+    NavHost(navController = navController , startDestination = Routes.LoginScreen.routeName){
 
 
         composable(Routes.PreLoginScreen.routeName){
