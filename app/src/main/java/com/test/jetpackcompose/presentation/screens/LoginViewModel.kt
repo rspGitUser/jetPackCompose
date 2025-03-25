@@ -2,6 +2,7 @@ package com.test.jetpackcompose.presentation.screens
 
 import android.annotation.SuppressLint
 import android.net.http.HttpException
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.jetpackcompose.data.model.userlist.Data
@@ -16,7 +17,9 @@ sealed class LoginState {
     object Loading : LoginState()
     data class Success(val token: String) : LoginState()
     data class Error(val message: String) : LoginState()
+
 }
+
 
 
 class LoginViewModel : ViewModel() {
@@ -32,7 +35,8 @@ class LoginViewModel : ViewModel() {
     fun login(email: String, password: String) {
 
         viewModelScope.launch {
-          _loginState.value = LoginState.Loading
+            Log.i("CalledViewModel->","CalledViewModel")
+          _loginState.value = LoginState.Init
             try {
                 val response = loginUseCase.execute(email, password)
 

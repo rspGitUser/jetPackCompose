@@ -18,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,14 +37,19 @@ import androidx.navigation.NavHostController
 import com.test.jetpackcompose.R
 import com.test.jetpackcompose.presentation.components.LoginInputText
 import com.test.jetpackcompose.presentation.navigation.Routes
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okhttp3.Route
 
+@OptIn(InternalCoroutinesApi::class)
 @Composable
 fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
 
     var email by remember { mutableStateOf("eve.holt@reqres.in") }
     var password by remember { mutableStateOf("cityslicka") }
-
+    val scope= rememberCoroutineScope()
     val attemps by remember {
         mutableStateOf(1)
     }
@@ -86,34 +92,35 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                 OnValueChange = { password = it.toString() })
 
             Button(modifier = Modifier.fillMaxWidth(), onClick = {
+                scope.launch {
+                    viewModel.login(email, password)
+                    delay(1000)
+                    when (state) {
 
-                viewModel.login(email, password)
-                when (state) {
+                        is LoginState.Init -> {
+                            Log.i("Login State->", "IDLE")
 
-                    is LoginState.Init -> {
-                        Log.i("Login State->", "IDLE")
+                        }
 
-                    }
+                        is LoginState.Loading -> {
+                            value = LoginState.Loading.toString()
+                            Log.i("Login State->", "Navigation Loading...")
+                        }
 
-                    is LoginState.Loading -> {
-                        value = LoginState.Loading.toString()
-                        Log.i("Login State->", "Navigation Loading...")
-                    }
+                        is LoginState.Success -> {
+                            value = "Success!!!"
+                            Log.i("Login State->", "Login success")
+                            navController.navigate(Routes.UserList.routeName)
+                        }
 
-                    is LoginState.Success -> {
-                        value = "Success!!!"
-                        Log.i("Login State->", "Login success")
-                        navController.navigate(Routes.UserList.routeName)
-                    }
+                        is LoginState.Error -> {
+                            value = "Error!!!"
+                            Log.i("Login State->", "ERROR")
+                        }
 
-                    is LoginState.Error -> {
-                        value = "Error!!!"
-                        Log.i("Login State->", "ERROR")
                     }
 
                 }
-
-
             }) {
                 Text(text = "Login")
             }
