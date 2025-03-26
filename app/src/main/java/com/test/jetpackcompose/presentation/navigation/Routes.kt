@@ -8,3 +8,6 @@ import kotlinx.serialization.Serializable
     object LoginScreen
 @Serializable
     object UserList
+
+@Serializable
+object UserListDetail

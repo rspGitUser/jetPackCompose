@@ -35,7 +35,7 @@ class LoginViewModel : ViewModel() {
     fun login(email: String, password: String) {
 
         viewModelScope.launch {
-            Log.i("CalledViewModel->","CalledViewModel")
+
           _loginState.value = LoginState.Init
             try {
                 val response = loginUseCase.execute(email, password)
