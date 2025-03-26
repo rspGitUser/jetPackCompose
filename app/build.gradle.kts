@@ -16,6 +16,7 @@ plugins {
     kotlin("kapt")
 
     kotlin("plugin.serialization") version "1.9.0"
+    id ("kotlin-parcelize")
 }
 
 

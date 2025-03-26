@@ -36,19 +36,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.test.jetpackcompose.data.model.userlist.Data
-import com.test.jetpackcompose.presentation.navigation.UserListDetail
+
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.test.jetpackcompose.presentation.navigation.objSingleUserDetailScreen
+
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun UserList(navController: NavController,viewModel: UserListViewModel = hiltViewModel(), NavigationToDetail: () -> Unit) {
+fun UserListScreenPrepare(viewModel: UserListViewModel = hiltViewModel(), NavigationToDetail: () -> Unit) {
 
 
     //val state by viewModel.userListState.collectAsStateWithLifecycle()
@@ -67,7 +67,7 @@ fun UserList(navController: NavController,viewModel: UserListViewModel = hiltVie
 
                 is UserListState.Success -> {
 
-                    navController.navigate(UserListDetail)
+                    NavigationToDetail()
 
 
                 }
@@ -90,7 +90,7 @@ fun UserList(navController: NavController,viewModel: UserListViewModel = hiltVie
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun UserListDetailScreen(navController: NavController,userListViewModel: UserListViewModel = hiltViewModel()) {
+fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel()) {
     userListViewModel.getUserList()
     val userListData by userListViewModel.userListData.collectAsState()
     val scope = rememberCoroutineScope()
@@ -133,7 +133,7 @@ fun UserListDetailScreen(navController: NavController,userListViewModel: UserLis
                             Spacer(modifier = Modifier.width(8.dp))
                             Column(modifier = Modifier.clickable {
                                 //Llamar a POPUP
-                                navController.navigate(objSingleUserDetailScreen)
+
 
                             }) {
                                 Text(

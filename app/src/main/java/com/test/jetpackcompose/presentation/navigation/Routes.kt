@@ -1,15 +1,18 @@
 package com.test.jetpackcompose.presentation.navigation
 
 import kotlinx.serialization.Serializable
-
 @Serializable
-object LoginScreen
+sealed class Routes {
+    @Serializable
 
-@Serializable
-object UserList
+    object Login:Routes()
 
-@Serializable
-object UserListDetail
+    @Serializable
+    object UserList:Routes()
 
-@Serializable
-object objSingleUserDetailScreen
+    @Serializable
+    object UserListDetail:Routes()
+
+    @Serializable
+    data class consultinParams(val userId: Int):Routes()
+}

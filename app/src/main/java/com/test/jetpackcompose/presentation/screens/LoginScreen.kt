@@ -34,9 +34,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import com.test.jetpackcompose.R
 import com.test.jetpackcompose.presentation.components.LoginInputText
-import com.test.jetpackcompose.presentation.navigation.UserList
+
 
 import kotlinx.coroutines.Delay
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -46,7 +47,7 @@ import okhttp3.Route
 
 @OptIn(InternalCoroutinesApi::class)
 @Composable
-fun LoginScreen(navController: NavController,viewModel: LoginViewModel = hiltViewModel(),NavigateTo:()->Unit) {
+fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(),NavigateToUserList:()->Unit) {
 
     var email by remember { mutableStateOf("eve.holt@reqres.in") }
     var password by remember { mutableStateOf("cityslicka") }
@@ -111,8 +112,8 @@ fun LoginScreen(navController: NavController,viewModel: LoginViewModel = hiltVie
                         is LoginState.Success -> {
                             value = "Success!!!"
                             Log.i("Login State->", "Login success")
-                       // NavigateTo()
-                            navController.navigate(UserList)
+
+                        NavigateToUserList()
 
                         }
 
