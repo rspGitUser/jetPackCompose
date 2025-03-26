@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun UserList(navController: NavController, viewModel: UserListViewModel = hiltViewModel()) {
+fun UserList(viewModel: UserListViewModel = hiltViewModel()) {
     // val state by viewModel.loginState.collectAsStateWithLifecycle()
 
     //val state by viewModel.userListState.collectAsStateWithLifecycle()
@@ -42,7 +42,7 @@ fun UserList(navController: NavController, viewModel: UserListViewModel = hiltVi
                     userListData.forEach(){
                         Log.i("userListData->", it.email)
                     }
-                    navController.popBackStack()
+
 
 
 

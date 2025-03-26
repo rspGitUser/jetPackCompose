@@ -36,7 +36,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.test.jetpackcompose.R
 import com.test.jetpackcompose.presentation.components.LoginInputText
-import com.test.jetpackcompose.presentation.navigation.Routes
+
 import kotlinx.coroutines.Delay
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -45,7 +45,7 @@ import okhttp3.Route
 
 @OptIn(InternalCoroutinesApi::class)
 @Composable
-fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(viewModel: LoginViewModel = hiltViewModel(),NavigateTo:()->Unit) {
 
     var email by remember { mutableStateOf("eve.holt@reqres.in") }
     var password by remember { mutableStateOf("cityslicka") }
@@ -110,7 +110,8 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
                         is LoginState.Success -> {
                             value = "Success!!!"
                             Log.i("Login State->", "Login success")
-                            navController.navigate(Routes.UserList.routeName)
+                        NavigateTo()
+
                         }
 
                         is LoginState.Error -> {
@@ -130,22 +131,4 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hi
     }
 }
 
-@Composable
-fun PreLoginScreen(navController: NavController) {
-    Column() {
 
-
-        Button(
-            onClick = {
-                navController.navigate(Routes.LoginScreen.routeName)
-            },
-        ) {
-            Text(
-                text = "Login...", modifier = Modifier
-                    .fillMaxWidth()
-                    .height(20.dp)
-            )
-        }
-    }
-
-}

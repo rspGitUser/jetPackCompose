@@ -7,25 +7,26 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.test.jetpackcompose.presentation.screens.LoginScreen
-import com.test.jetpackcompose.presentation.screens.PreLoginScreen
 import com.test.jetpackcompose.presentation.screens.userList.UserList
 
 @Composable
 fun  Navigation(navController:NavHostController)
 {
 
-    NavHost(navController = navController , startDestination = Routes.LoginScreen.routeName){
+    NavHost(navController = navController , startDestination = LoginScreen){
+/*
+    composable<Home> {
+            HomeScreen { name -> navController.navigate(Detail(name = name)) }
+        }
 
-
-        composable(Routes.PreLoginScreen.routeName){
-            PreLoginScreen(navController = navController)
-        }
-        composable(Routes.LoginScreen.routeName){
-            LoginScreen(navController = navController)
-            
-        }
-        composable(Routes.UserList.routeName){
-            UserList(navController)
-        }
+ */
+    composable<LoginScreen> {
+       com.test.jetpackcompose.presentation.screens.LoginScreen {
+          navController.navigate(UserList)
+       }
+    }
+ composable<UserList> {
+     com.test.jetpackcompose.presentation.screens.userList.UserList()
+ }
     }
 }
