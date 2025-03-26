@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.test.jetpackcompose.presentation.screens.LoginScreen
 import com.test.jetpackcompose.presentation.screens.userList.SingleUserDetailScreen
 import com.test.jetpackcompose.presentation.screens.userList.UserListDetailScreen
@@ -29,9 +30,16 @@ fun Navigation(navController: NavHostController) {
         }
 
         composable<Routes.UserListDetail> {
-            UserListDetailScreen()
+            UserListDetailScreen(){
+                userId->
+             navController.navigate(Routes.sectedUser(userId = userId))
+            }
         }
 
+        composable<Routes.sectedUser> {
+            val selectedUser:Routes.sectedUser= it.toRoute()
+            SingleUserDetailScreen(selectedUser.userId )
+        }
 
     }
 }

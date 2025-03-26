@@ -3,6 +3,7 @@ package com.test.jetpackcompose.presentation.screens.userList
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +19,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,12 +51,15 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun UserListScreenPrepare(viewModel: UserListViewModel = hiltViewModel(), NavigationToDetail: () -> Unit) {
+fun UserListScreenPrepare(
+    viewModel: UserListViewModel = hiltViewModel(),
+    NavigationToDetail: () -> Unit
+) {
 
 
     //val state by viewModel.userListState.collectAsStateWithLifecycle()
     val state by viewModel.userListState.collectAsState()
-    val userListData by viewModel.userListData.collectAsState()
+
     val scope = rememberCoroutineScope()
     Column(modifier = Modifier.fillMaxSize()) {
         scope.launch {
@@ -90,7 +96,10 @@ fun UserListScreenPrepare(viewModel: UserListViewModel = hiltViewModel(), Naviga
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel()) {
+fun UserListDetailScreen(
+    userListViewModel: UserListViewModel = hiltViewModel(),
+    NavigateToUserDetail: (Int) -> Unit
+) {
     userListViewModel.getUserList()
     val userListData by userListViewModel.userListData.collectAsState()
     val scope = rememberCoroutineScope()
@@ -133,7 +142,8 @@ fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel())
                             Spacer(modifier = Modifier.width(8.dp))
                             Column(modifier = Modifier.clickable {
                                 //Llamar a POPUP
-
+                                NavigateToUserDetail(it.id)
+                                Log.i("selectedUser->", it.id.toString())
 
                             }) {
                                 Text(
@@ -171,20 +181,61 @@ fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel())
 }
 
 @Composable
-fun SingleUserDetailScreen(navController: NavController,viewModel: UserListViewModel = hiltViewModel()) {
-    val showPopUp by viewModel.showPopup.collectAsState()
-    val userId by viewModel.userId.collectAsState()
-Box(modifier = Modifier.fillMaxSize().background(color= Color.Cyan))
+fun SingleUserDetailScreen(userId: Int, viewModel: UserListViewModel = hiltViewModel()) {
 
-    if (showPopUp) {
 
-        Popup(onDismissRequest = {
+    viewModel.getSingleUser(userId)
+    val singleUserData by viewModel.singleUserData.collectAsState()
+    val state by viewModel.singleUserState.collectAsState()
 
-        }) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(text = "Customer detail ($userId)")
-            }
-        }
-    }
 
+
+//if (singleUserData.isNotEmpty()) {
+//    val data = Data(
+//        id=singleUserData[0].id,
+//        avatar = singleUserData[0].avatar,
+//        email = singleUserData[0].email,
+//        first_name = singleUserData[0].first_name,
+//        last_name = singleUserData[0].last_name
+//    )
+//    when (state) {
+//        is SingleUserState.Success -> {
+//
+//            Popup(onDismissRequest = {
+//
+//            }) {
+//                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//                    Card(
+//                        modifier = Modifier
+//                            .border(width = 1.dp, color = Color.Blue)
+//                            .clip(
+//                                RoundedCornerShape(20.dp)
+//                            )
+//                    ) {
+//                        Column {
+////                            AsyncImage(
+////                                model = singleUserData[0].avatar,
+////                                contentDescription = singleUserData[0].avatar.toString(),
+////                                modifier = Modifier
+////                                    .clip(
+////                                        CircleShape
+////                                    )
+////                                    .size(50.dp),
+////                                contentScale = ContentScale.Crop,
+////                            )
+//                            Text(text = data?.id.toString() ?: "")
+//                        }
+//                    }
+//
+//                }
+//            }
+//
+//        }
+//
+//        else -> {
+//
+//        }
+//    }
+//
+//}
 }

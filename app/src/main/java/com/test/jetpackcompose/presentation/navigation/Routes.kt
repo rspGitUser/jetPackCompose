@@ -14,5 +14,5 @@ sealed class Routes {
     object UserListDetail:Routes()
 
     @Serializable
-    data class consultinParams(val userId: Int):Routes()
+    data class sectedUser(val userId: Int):Routes()
 }

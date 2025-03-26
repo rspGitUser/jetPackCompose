@@ -47,23 +47,30 @@ class UserListViewModel : ViewModel() {
     val userId=MutableStateFlow<Int>(0)
     fun getSingleUser(userId:Int) {
         viewModelScope.launch {
-            _singleUserState.value = SingleUserState.Loading
-            val response = singleUserUseCase.getSingleUser(userId)
-            if (response.isSuccessful) {
-                val data = response.body()?.data ?: emptyList()
-                singleUserData.value = data
-                _singleUserState.value = SingleUserState.Success(data)
-                Log.i("Log->","Single user success")
-            } else {
-                Log.e("Error->", "Error fetching single user: ${response.message()}")
-                _singleUserState.value = SingleUserState.Error
+            try {
+
+
+                _singleUserState.value = SingleUserState.Loading
+                val response = singleUserUseCase.getSingleUser(userId)
+                if (response.isSuccessful) {
+                    val data = response.body()?.data ?: emptyList()
+                    singleUserData.value = data
+                    _singleUserState.value = SingleUserState.Success(data)
+                    Log.i("Log->", "Single user success")
+                    Log.i("Single User", data[0].avatar.toString())
+                } else {
+                    Log.e("Error->", "Error fetching single user: ${response.message()}")
+                    _singleUserState.value = SingleUserState.Error
+                }
+            }catch (error:Error){
+                Log.e("ViewModelError",error.message.toString())
             }
         }
     }
     fun getUserList() {
         viewModelScope.launch {
             _userListState.value = UserListState.Loading
-            val response = userListUseCase.execute(1,2)
+            val response = userListUseCase.execute(1,12)
             if (response.isSuccessful) {
                 val data = response.body()?.data ?: emptyList()
                 userListData.value = data
