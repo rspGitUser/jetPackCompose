@@ -91,49 +91,55 @@ fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel())
     Scaffold(
         topBar = {
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Row {
-                    Text(text = "Contacts")
+                Row() {
+                    Text(text = "Contacts", fontWeight = FontWeight.Bold)
                 }
             }
         }, content = {
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .height(10.dp))
-            LazyColumn(
-                verticalArrangement = Arrangement.Center,
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
+                    .fillMaxSize()
+                    .padding(top = 25.dp)
             ) {
-                items(userListData) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        //Mostrar imagen
-                        AsyncImage(
-                            model = it.avatar,
-                            contentDescription = it.avatar,
-                            modifier = Modifier
-                                .clip(
-                                    CircleShape
-                                )
-                                .size(50.dp),
-                            contentScale = ContentScale.Crop,
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Column {
-                            Text(
-                                text = """
+
+                LazyColumn(
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                ) {
+                    items(userListData) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            //Mostrar imagen
+                            AsyncImage(
+                                model = it.avatar,
+                                contentDescription = it.avatar,
+                                modifier = Modifier
+                                    .clip(
+                                        CircleShape
+                                    )
+                                    .size(50.dp),
+                                contentScale = ContentScale.Crop,
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Column {
+                                Text(
+                                    text = """
                         ${it.first_name} ${it.last_name}
                     """.trimIndent(), fontWeight = FontWeight.Bold
-                            )
+                                )
 
-                            Text(text = it.email)
+                                Text(text = it.email)
 
-                            //mostrar foto, nombre completo y correo electrónico de cada usuario).
+                                //mostrar foto, nombre completo y correo electrónico de cada usuario).
+                            }
                         }
+                        Spacer(modifier = Modifier.fillMaxWidth().height(8.dp))
                     }
+
 
                 }
             }

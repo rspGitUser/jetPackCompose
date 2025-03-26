@@ -18,4 +18,6 @@ class UserRepository {
     suspend fun getUserList(): Response<UserList>{
         return  apiService.getUserList()
     }
+
+
 }

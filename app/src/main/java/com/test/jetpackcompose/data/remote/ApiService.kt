@@ -17,4 +17,7 @@ interface ApiService {
 @GET("users?page=1&per_page=12")
 suspend fun getUserList():Response<UserList>
 
+@GET("users/{10}")
+suspend fun getSingleUser():Response<com.test.jetpackcompose.data.model.singleuser.Data>
+
 }
