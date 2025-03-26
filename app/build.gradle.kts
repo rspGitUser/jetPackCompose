@@ -124,5 +124,10 @@ kapt ("com.google.dagger:hilt-compiler:2.44")
     implementation("androidx.navigation:navigation-compose:2.8.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
+    //Coil para mostrar imagenes desde URL
+    implementation("io.coil-kt:coil-compose:2.2.2")
+
+
+
 }
 
