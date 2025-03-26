@@ -2,6 +2,7 @@ package com.test.jetpackcompose.presentation.screens.userList
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +38,8 @@ import com.test.jetpackcompose.presentation.navigation.UserListDetail
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Popup
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -87,7 +90,7 @@ fun UserList(viewModel: UserListViewModel = hiltViewModel(), NavigationToDetail:
 fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel()) {
     userListViewModel.getUserList()
     val userListData by userListViewModel.userListData.collectAsState()
-
+    val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -125,7 +128,13 @@ fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel())
                                 contentScale = ContentScale.Crop,
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Column {
+                            Column(modifier = Modifier.clickable {
+                                //Llamar a POPUP
+                                userListViewModel.userId.value = 1
+                                userListViewModel.showPopup.value = true
+
+
+                            }) {
                                 Text(
                                     text = """
                         ${it.first_name} ${it.last_name}
@@ -137,7 +146,11 @@ fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel())
                                 //mostrar foto, nombre completo y correo electrónico de cada usuario).
                             }
                         }
-                        Spacer(modifier = Modifier.fillMaxWidth().height(8.dp))
+                        Spacer(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(8.dp)
+                        )
                     }
 
 
@@ -153,5 +166,24 @@ fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel())
         }
     )
 
+    SingleUserDetailScreen(viewModel = userListViewModel)
+}
+
+@Composable
+fun SingleUserDetailScreen(viewModel: UserListViewModel = hiltViewModel()) {
+    val showPopUp by viewModel.showPopup.collectAsState()
+    val userId by viewModel.userId.collectAsState()
+
+
+    if (showPopUp) {
+
+        Popup(onDismissRequest = {
+
+        }) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Text(text = "Customer detail ($userId)")
+            }
+        }
+    }
 
 }

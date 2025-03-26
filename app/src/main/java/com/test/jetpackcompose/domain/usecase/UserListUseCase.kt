@@ -8,8 +8,8 @@ import retrofit2.Response
 
 class UserListUseCase(private val repository: UserRepository) {
 
-    suspend fun execute(): Response<UserList> {
-        return repository.getUserList()
+    suspend fun execute(page:Int,per_page:Int): Response<UserList> {
+        return repository.getUserList(page,per_page)
 
     }
 

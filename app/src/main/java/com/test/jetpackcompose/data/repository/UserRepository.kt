@@ -2,10 +2,12 @@ package com.test.jetpackcompose.data.repository
 
 import com.test.jetpackcompose.data.model.login.LoginRequest
 import com.test.jetpackcompose.data.model.login.LoginResponse
-import com.test.jetpackcompose.data.model.userlist.Data
+import com.test.jetpackcompose.data.model.userlist.SingleUser
 import com.test.jetpackcompose.data.model.userlist.UserList
 import com.test.jetpackcompose.data.remote.ApiClient
 import retrofit2.Response
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 class UserRepository {
 
@@ -15,9 +17,17 @@ class UserRepository {
         return apiService.login(LoginRequest(email, password))
     }
 
-    suspend fun getUserList(): Response<UserList>{
-        return  apiService.getUserList()
+    suspend fun getUserList(
+        @Query("page") page:Int,
+        @Query("per_page") per_page:Int
+    ): Response<UserList>{
+        return  apiService.getUserList(page,per_page)
     }
 
-
+    suspend fun getSingleUser(
+        @Path("userId")userId:Int
+    ):Response<SingleUser>
+    {
+        return apiService.getSingleUser(userId)
+    }
 }

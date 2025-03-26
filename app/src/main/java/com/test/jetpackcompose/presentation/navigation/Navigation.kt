@@ -1,13 +1,10 @@
 package com.test.jetpackcompose.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.test.jetpackcompose.presentation.screens.LoginScreen
-import com.test.jetpackcompose.presentation.screens.userList.UserList
+import com.test.jetpackcompose.presentation.screens.userList.SingleUserDetailScreen
 import com.test.jetpackcompose.presentation.screens.userList.UserListDetailScreen
 
 @Composable
@@ -33,5 +30,9 @@ fun Navigation(navController: NavHostController) {
         composable<UserListDetail> {
             UserListDetailScreen()
         }
+        composable<SingleUserDetailScreen> {
+            SingleUserDetailScreen()
+        }
+
     }
 }

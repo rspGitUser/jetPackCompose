@@ -8,3 +8,8 @@ data class UserList(
     val total: Int,
     val total_pages: Int
 )
+
+data class SingleUser(
+    val `data`: List<Data>
+
+)

@@ -3,11 +3,13 @@ package com.test.jetpackcompose.presentation.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
+object LoginScreen
 
-
-    object LoginScreen
 @Serializable
-    object UserList
+object UserList
 
 @Serializable
 object UserListDetail
+
+@Serializable
+object SingleUserDetailScreen
