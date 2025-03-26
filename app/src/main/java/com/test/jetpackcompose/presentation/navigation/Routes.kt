@@ -12,4 +12,4 @@ object UserList
 object UserListDetail
 
 @Serializable
-object SingleUserDetailScreen
+object objSingleUserDetailScreen

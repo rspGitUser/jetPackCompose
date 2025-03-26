@@ -2,6 +2,7 @@ package com.test.jetpackcompose.presentation.screens.userList
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,11 +43,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.test.jetpackcompose.presentation.navigation.objSingleUserDetailScreen
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun UserList(viewModel: UserListViewModel = hiltViewModel(), NavigationToDetail: () -> Unit) {
+fun UserList(navController: NavController,viewModel: UserListViewModel = hiltViewModel(), NavigationToDetail: () -> Unit) {
 
 
     //val state by viewModel.userListState.collectAsStateWithLifecycle()
@@ -64,7 +67,7 @@ fun UserList(viewModel: UserListViewModel = hiltViewModel(), NavigationToDetail:
 
                 is UserListState.Success -> {
 
-                    NavigationToDetail()
+                    navController.navigate(UserListDetail)
 
 
                 }
@@ -87,7 +90,7 @@ fun UserList(viewModel: UserListViewModel = hiltViewModel(), NavigationToDetail:
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel()) {
+fun UserListDetailScreen(navController: NavController,userListViewModel: UserListViewModel = hiltViewModel()) {
     userListViewModel.getUserList()
     val userListData by userListViewModel.userListData.collectAsState()
     val scope = rememberCoroutineScope()
@@ -130,9 +133,7 @@ fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel())
                             Spacer(modifier = Modifier.width(8.dp))
                             Column(modifier = Modifier.clickable {
                                 //Llamar a POPUP
-                                userListViewModel.userId.value = 1
-                                userListViewModel.showPopup.value = true
-
+                                navController.navigate(objSingleUserDetailScreen)
 
                             }) {
                                 Text(
@@ -166,14 +167,14 @@ fun UserListDetailScreen(userListViewModel: UserListViewModel = hiltViewModel())
         }
     )
 
-    SingleUserDetailScreen(viewModel = userListViewModel)
+
 }
 
 @Composable
-fun SingleUserDetailScreen(viewModel: UserListViewModel = hiltViewModel()) {
+fun SingleUserDetailScreen(navController: NavController,viewModel: UserListViewModel = hiltViewModel()) {
     val showPopUp by viewModel.showPopup.collectAsState()
     val userId by viewModel.userId.collectAsState()
-
+Box(modifier = Modifier.fillMaxSize().background(color= Color.Cyan))
 
     if (showPopUp) {
 
