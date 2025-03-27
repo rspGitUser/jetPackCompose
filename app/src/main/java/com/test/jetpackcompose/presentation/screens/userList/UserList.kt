@@ -2,6 +2,7 @@ package com.test.jetpackcompose.presentation.screens.userList
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,7 +35,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -46,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.test.jetpackcompose.R
 import com.test.jetpackcompose.data.model.singleuser.SingleData
 import com.test.jetpackcompose.data.model.singleuser.SingleUserData
 
@@ -205,28 +210,46 @@ fun SingleUserDetailScreen(userId: Int, viewModel: UserListViewModel = hiltViewM
 fun SingleUserColumnScreen(singleUserData: SingleData) {
 
 
+
     Popup(onDismissRequest = {
 
     }) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color.Transparent),
+            contentAlignment = Alignment.Center
+        ) {
             Card(
                 modifier = Modifier
-                    .border(width = 1.dp, color = Color.Blue)
+                    .fillMaxHeight(0.5f)
+                    .fillMaxWidth(0.9f)
                     .clip(
                         RoundedCornerShape(20.dp)
-                    )
+                    ).background(color=Color.Transparent)
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(10.dp).background(color=Color.Transparent),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     AsyncImage(
                         model = singleUserData.avatar,
-                        contentDescription = singleUserData.avatar,
+                        contentDescription = singleUserData.avatar.toString(),
                         modifier = Modifier
                             .clip(
                                 CircleShape
                             )
-                            .size(50.dp),
+                            .fillMaxSize(0.3f),
                         contentScale = ContentScale.Crop,
                     )
+
+                    Text(text = singleUserData.first_name+ " "+ singleUserData.last_name, fontWeight = FontWeight.Bold)
+                    Text(text = singleUserData.email, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = """
+                        Tired of writing endless social media content? Let Content Caddy generate it for you.""".trimIndent()
+
+                        , textAlign = TextAlign.Justify)
 
                 }
             }
