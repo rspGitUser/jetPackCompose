@@ -2,7 +2,8 @@ package com.test.jetpackcompose.data.repository
 
 import com.test.jetpackcompose.data.model.login.LoginRequest
 import com.test.jetpackcompose.data.model.login.LoginResponse
-import com.test.jetpackcompose.data.model.userlist.SingleUser
+import com.test.jetpackcompose.data.model.singleuser.SingleData
+import com.test.jetpackcompose.data.model.singleuser.SingleUserData
 import com.test.jetpackcompose.data.model.userlist.UserList
 import com.test.jetpackcompose.data.remote.ApiClient
 import retrofit2.Response
@@ -26,7 +27,7 @@ class UserRepository {
 
     suspend fun getSingleUser(
         @Path("userId") userId:Int
-    ):Response<SingleUser>
+    ):Response<SingleUserData>
     {
         return apiService.getSingleUser(userId)
     }

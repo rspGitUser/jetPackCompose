@@ -46,6 +46,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.test.jetpackcompose.data.model.singleuser.SingleData
+import com.test.jetpackcompose.data.model.singleuser.SingleUserData
 
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -143,7 +145,6 @@ fun UserListDetailScreen(
                             Column(modifier = Modifier.clickable {
                                 //Llamar a POPUP
                                 NavigateToUserDetail(it.id)
-                                Log.i("selectedUser->", it.id.toString())
 
                             }) {
                                 Text(
@@ -185,57 +186,54 @@ fun SingleUserDetailScreen(userId: Int, viewModel: UserListViewModel = hiltViewM
 
 
     viewModel.getSingleUser(userId)
+
     val singleUserData by viewModel.singleUserData.collectAsState()
     val state by viewModel.singleUserState.collectAsState()
 
+    when (state) {
+        is SingleUserState.Success -> {
+
+            SingleUserColumnScreen(singleUserData = singleUserData)
+
+        }
+
+        else -> {}
+    }
+}
+
+@Composable
+fun SingleUserColumnScreen(singleUserData: SingleData) {
 
 
-//if (singleUserData.isNotEmpty()) {
-//    val data = Data(
-//        id=singleUserData[0].id,
-//        avatar = singleUserData[0].avatar,
-//        email = singleUserData[0].email,
-//        first_name = singleUserData[0].first_name,
-//        last_name = singleUserData[0].last_name
-//    )
-//    when (state) {
-//        is SingleUserState.Success -> {
-//
-//            Popup(onDismissRequest = {
-//
-//            }) {
-//                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-//                    Card(
-//                        modifier = Modifier
-//                            .border(width = 1.dp, color = Color.Blue)
-//                            .clip(
-//                                RoundedCornerShape(20.dp)
-//                            )
-//                    ) {
-//                        Column {
-////                            AsyncImage(
-////                                model = singleUserData[0].avatar,
-////                                contentDescription = singleUserData[0].avatar.toString(),
-////                                modifier = Modifier
-////                                    .clip(
-////                                        CircleShape
-////                                    )
-////                                    .size(50.dp),
-////                                contentScale = ContentScale.Crop,
-////                            )
-//                            Text(text = data?.id.toString() ?: "")
-//                        }
-//                    }
-//
-//                }
-//            }
-//
-//        }
-//
-//        else -> {
-//
-//        }
-//    }
-//
-//}
+    Popup(onDismissRequest = {
+
+    }) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Card(
+                modifier = Modifier
+                    .border(width = 1.dp, color = Color.Blue)
+                    .clip(
+                        RoundedCornerShape(20.dp)
+                    )
+            ) {
+                Column {
+                    AsyncImage(
+                        model = singleUserData.avatar,
+                        contentDescription = singleUserData.avatar,
+                        modifier = Modifier
+                            .clip(
+                                CircleShape
+                            )
+                            .size(50.dp),
+                        contentScale = ContentScale.Crop,
+                    )
+
+                }
+            }
+
+        }
+
+
+    }
+
 }

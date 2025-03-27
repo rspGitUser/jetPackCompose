@@ -1,6 +1,6 @@
 package com.test.jetpackcompose.data.model.singleuser
 
-data class SingleUser(
-    val `data`: Data,
+data class SingleUserData(
+    val data: SingleData,
     val support: Support
 )

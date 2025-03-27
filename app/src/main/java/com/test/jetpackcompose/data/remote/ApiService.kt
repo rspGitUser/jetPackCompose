@@ -2,8 +2,9 @@ package com.test.jetpackcompose.data.remote
 
 import com.test.jetpackcompose.data.model.login.LoginRequest
 import com.test.jetpackcompose.data.model.login.LoginResponse
+import com.test.jetpackcompose.data.model.singleuser.SingleData
+import com.test.jetpackcompose.data.model.singleuser.SingleUserData
 import com.test.jetpackcompose.data.model.userlist.Data
-import com.test.jetpackcompose.data.model.userlist.SingleUser
 import com.test.jetpackcompose.data.model.userlist.UserList
 
 import retrofit2.Response
@@ -28,6 +29,7 @@ suspend fun getUserList(
 @GET("users/{userId}")
 suspend fun getSingleUser(
     @Path("userId") userId:Int
-):Response<SingleUser>
+
+):Response<SingleUserData>
 
 }

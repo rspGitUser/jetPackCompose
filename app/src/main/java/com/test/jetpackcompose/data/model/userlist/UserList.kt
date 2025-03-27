@@ -9,7 +9,3 @@ data class UserList(
     val total_pages: Int
 )
 
-data class SingleUser(
-    val `data`: List<Data>
-
-)
