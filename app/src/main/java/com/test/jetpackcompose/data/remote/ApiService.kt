@@ -22,12 +22,12 @@ interface ApiService {
 @GET("users")
 suspend fun getUserList(
     @Query("page")page:Int,
-    @Query("per_page")per_page:Int
+    @Query("per_page") per_page:Int
 ):Response<UserList>
 
 @GET("users/{userId}")
 suspend fun getSingleUser(
-    @Path("userId")userId:Int
+    @Path("userId") userId:Int
 ):Response<SingleUser>
 
 }

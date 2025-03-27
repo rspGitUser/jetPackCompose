@@ -25,7 +25,7 @@ class UserRepository {
     }
 
     suspend fun getSingleUser(
-        @Path("userId")userId:Int
+        @Path("userId") userId:Int
     ):Response<SingleUser>
     {
         return apiService.getSingleUser(userId)
